@@ -24,4 +24,5 @@ if argnumbers != 2 :
     print("")
     print("testing Poll SCM")
     print("testing Poll SCM")
+    print("testing Poll SCM")
     sys.exit(1)
