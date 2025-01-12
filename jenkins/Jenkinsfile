@@ -27,14 +27,13 @@ node {
     }
 
     stage('Deliver') {
-        docker.image('cdrx/pyinstaller-linux:python2').inside {
-            sh 'pwd' // Print current directory
-            sh 'ls -R' // List all files in workspace
-            sh 'cat sources/add2vals.py' // Show the content of the file
-            sh 'pip install -r requirements.txt || echo "Dependency installation failed."' // Install dependencies
-            sh 'pyinstaller --onefile sources/add2vals.py || echo "Pyinstaller failed. See logs below."' // Run pyinstaller
-            sh 'ls dist || echo "dist directory missing or empty."' // Check dist directory
+        docker.image('python:3-alpine').inside('-u root') { // Run as root inside the container
+            sh '''
+            apk add --no-cache binutils
+            pip install --no-cache-dir pyinstaller
+            pyinstaller --onefile sources/add2vals.py
+        '''
         }
-        archiveArtifacts artifacts: 'dist/add2vals', allowEmptyArchive: false
+        archiveArtifacts artifacts: 'dist/add2vals', onlyIfSuccessful: false
     }
 }
