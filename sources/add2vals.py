@@ -23,4 +23,5 @@ if argnumbers != 2 :
     print("       If unbundled, usage is 'python add2vals.py X Y'.")
     print("")
     print("testing Poll SCM")
+    print("testing Poll SCM")
     sys.exit(1)
