@@ -26,10 +26,17 @@ node {
         }
     }
     stage('Approval'){
-       input message: "Lanjutkan ke tahap Deliver?",
-            ok: "Proceed",
+        def userInput = input(
+            message: "Lanjutkan ke tahap Deploy?",
+            ok: "Submit",
             parameters: [choice(name: 'Approval', choices: 'Yes\nNo', description: 'Setujui atau hentikan pipeline')]
-
+        )
+        if (userInput == 'No') {
+            echo "Approval tidak didiberikan..."
+            error("Pipeline dihentikan oleh pengguna.")
+        } else {
+            echo "Approval diberikan, melanjutkan ke tahap Deploy..."
+        }
 
     }
 
