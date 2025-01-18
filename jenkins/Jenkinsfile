@@ -25,6 +25,13 @@ node {
             }
         }
     }
+    stage('Approval'){
+       input message: "Lanjutkan ke tahap Deliver?",
+            ok: "Proceed",
+            parameters: [choice(name: 'Approval', choices: 'Yes\nNo', description: 'Setujui atau hentikan pipeline')]
+
+
+    }
 
     stage('Deliver') { /* harus deploy*/
         docker.image('python:3-alpine').inside('-u root') { // Run as root inside the container
